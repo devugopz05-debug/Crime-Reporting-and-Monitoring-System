@@ -1,0 +1,149 @@
+{% extends 'inv_home/inv_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+   <div class="row column_title">
+      <div class="col-md-12">
+         <div class="page_title">
+            <h2>Investigator Dashboard</h2>
+         </div>
+      </div>
+   </div>
+
+   <!-- Welcome Section -->
+   <div class="row">
+      <div class="col-md-12">
+         <div class="white_shd full margin_bottom_30">
+            <div class="full graph_head">
+               <div class="heading1 margin_0">
+                  <h2>Welcome, {{ inv.inv_full_name }}</h2>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Overview Cards -->
+   <div class="row column1">
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div><i class="fa fa-exclamation-circle blue1_color"></i></div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ assigned_count }}</p>
+                  <p class="head_couter">New Assigned</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div><i class="fa fa-eye yellow_color"></i></div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ under_review_count }}</p>
+                  <p class="head_couter">Under Review</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div><i class="fa fa-search green_color"></i></div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ in_investigation_count }}</p>
+                  <p class="head_couter">In Investigation</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div><i class="fa fa-check-circle red_color"></i></div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ total_closed }}</p>
+                  <p class="head_couter">Closed/Resolved</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Charts -->
+   <div class="row column2 graph margin_bottom_30">
+      <div class="col-md-12">
+         <div class="white_shd full">
+            <div class="full graph_head">
+               <div class="heading1 margin_0">
+                  <h2>My Case Status Distribution</h2>
+               </div>
+            </div>
+            <div class="full graph_revenue">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="content">
+                        <canvas id="invStatusChart" height="100"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+      var ctx = document.getElementById('invStatusChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+         type: 'bar',
+         data: {
+            labels: {{ status_labels| safe }},
+      datasets: [{
+         label: 'Number of Cases',
+         data: {{ status_counts| safe }},
+      backgroundColor: [
+         'rgba(54, 162, 235, 0.6)', // Blue
+         'rgba(255, 206, 86, 0.6)', // Yellow
+         'rgba(75, 192, 192, 0.6)', // Teal
+         'rgba(153, 102, 255, 0.6)', // Purple
+         'rgba(255, 99, 132, 0.6)'  // Red
+      ],
+      borderColor: [
+         'rgba(54, 162, 235, 1)',
+         'rgba(255, 206, 86, 1)',
+         'rgba(75, 192, 192, 1)',
+         'rgba(153, 102, 255, 1)',
+         'rgba(255, 99, 132, 1)'
+      ],
+      borderWidth: 1
+                }]
+            },
+      options: {
+      responsive: true,
+      scales: {
+         yAxes: [{
+            ticks: {
+               beginAtZero: true,
+               stepSize: 1
+            }
+         }]
+      },
+      legend: { display: false }
+   }
+        });
+    });
+</script>
+
+{% endblock %}

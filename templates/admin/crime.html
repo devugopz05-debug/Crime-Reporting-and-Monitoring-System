@@ -1,0 +1,227 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<div class="container-fluid">
+  <div class="row column_title">
+    <div class="col-md-12">
+      <div class="page_title">
+        <h2>Dashboard</h2>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- graph -->
+  <div class="row column2 graph margin_bottom_30">
+    <div class="col-md-12 col-lg-12">
+      <div class="white_shd full">
+        <div class="full graph_head">
+          <div class="heading1 margin_0">
+            <h2>Reported Crimes</h2>
+
+          </div>
+        </div>
+        <div class="full graph_revenue">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="content">
+                <div class="area_chart">
+
+                  <table class="table table-responsive">
+                    <tr>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Location</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Citizen</th>
+                      <th>Actions</th>
+
+                    </tr>
+                    {% for c in clist %}
+                    <tr>
+                      <td>{{c.crime_report_title}}</td>
+                      <td>{{c.category_name}}</td>
+                      <td>{{c.crime_description}}</td>
+                      <td>{{c.crime_report_location}}</td>
+                      <td>{{c.crime_report_date|date:'d-m-Y'}}</td>
+                      <td>{{c.crime_report_status}}</td>
+                      <td>
+
+                        <a href="#" class="text-primary" class="showCitizen" data-bs-toggle="modal"
+                          data-bs-target="#citizenModal" data-name="{{ c.full_name }}" data-email="{{ c.user_email }}"
+                          data-phone="{{ c.user_phone }}" data-address="{{ c.user_address }}"
+                          data-location="{{ c.user_location }}" data-gender="{{ c.user_gender }}">{{ c.full_name }}
+
+                        </a>
+                      </td>
+                      <td>
+
+                        <a href="{% url 'crime_location' c.crime_report_id %}"
+                          class="btn btn-sm btn-danger">Location</a>
+
+                        {% if c.fk_invest_id %}
+                        <!-- Case Assigned -->
+                        <a href="" class="text-white btn btn-sm btn-success" class="showInv" data-bs-toggle="modal"
+                          data-bs-target="#invModal" data-name="{{ c.inv_full_name }}" data-email="{{ c.inv_email }}"
+                          data-phone="{{ c.inv_phone }}" data-address="{{ c.inv_address }}"
+                          data-location="{{ c.inv_location }}" data-gender="{{ c.inv_gender }}">
+                          Assigned
+                        </a>
+                        {% else %}
+                        <a href="#" class="btn btn-sm btn-warning assignBtn" data-bs-toggle="modal"
+                          data-bs-target="#assignModal" data-crime="{{ c.crime_report_id }}" style="width:116px;">Set
+                          Investigator</a>{% endif %}
+                        <a href="" class="btn btn-sm btn-primary">View
+                          Evidence</a>
+                        {% if c.note_count > 0 %}
+                        <a href="{% url 'inv_note' c.crime_report_id %}" class="btn btn-sm btn-info">Inv
+                          Notes</a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const citizenModal = document.getElementById("citizenModal");
+
+      citizenModal.addEventListener("show.bs.modal", function (event) {
+        const link = event.relatedTarget;
+
+        document.getElementById("cName").textContent = link.getAttribute("data-name");
+        document.getElementById("cEmail").textContent = link.getAttribute("data-email");
+        document.getElementById("cPhone").textContent = link.getAttribute("data-phone");
+        document.getElementById("cAddress").textContent = link.getAttribute("data-address");
+        document.getElementById("cLocation").textContent = link.getAttribute("data-location");
+        document.getElementById("cGender").textContent = link.getAttribute("data-gender");
+      });
+
+    });
+  </script>
+
+
+  <!-- Citizen Details Modal -->
+  <div class="modal fade" id="citizenModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Citizen Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <p><strong>Name:</strong> <span id="cName"></span></p>
+          <p><strong>Email:</strong> <span id="cEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="cPhone"></span></p>
+          <p><strong>Address:</strong> <span id="cAddress"></span></p>
+          <p><strong>Location:</strong> <span id="cLocation"></span></p>
+          <p><strong>Gender:</strong> <span id="cGender"></span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).on("click", ".assignBtn", function () {
+      let crimeId = $(this).data("crime");
+      $("#crimeID").val(crimeId);
+    });
+  </script>
+
+  <!-- Assign Investigator Modal -->
+  <div class="modal fade" id="assignModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <form method="POST" action="{% url 'assign_investigator' %}">
+          {% csrf_token %}
+
+          <div class="modal-header">
+            <h5 class="modal-title">Assign Investigator</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <!-- Hidden Crime ID -->
+            <input type="hidden" id="crimeID" name="crime_id">
+
+            <label>Select Investigator</label>
+            <select class="form-control" name="investigator_id" required>
+              <option value="">-- Select Investigator --</option>
+              {% for inv in ilist %}
+              <option value="{{ inv.inv_id }}">
+                {{ inv.inv_full_name }}
+              </option>
+              {% endfor %}
+            </select>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const invModal = document.getElementById("invModal");
+
+      invModal.addEventListener("show.bs.modal", function (event) {
+        const link = event.relatedTarget;
+
+        document.getElementById("iName").textContent = link.getAttribute("data-name");
+        document.getElementById("iEmail").textContent = link.getAttribute("data-email");
+        document.getElementById("iPhone").textContent = link.getAttribute("data-phone");
+        document.getElementById("iAddress").textContent = link.getAttribute("data-address");
+        document.getElementById("iLocation").textContent = link.getAttribute("data-location");
+        document.getElementById("iGender").textContent = link.getAttribute("data-gender");
+      });
+
+    });
+  </script> <!-- Invesigator Details Modal -->
+  <div class="modal fade" id="invModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Investigator Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <p><strong>Name:</strong> <span id="iName"></span></p>
+          <p><strong>Email:</strong> <span id="iEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="iPhone"></span></p>
+          <p><strong>Address:</strong> <span id="iAddress"></span></p>
+          <p><strong>Location:</strong> <span id="iLocation"></span></p>
+          <p><strong>Gender:</strong> <span id="iGender"></span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

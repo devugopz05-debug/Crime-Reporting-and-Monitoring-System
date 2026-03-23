@@ -1,0 +1,149 @@
+{% extends 'inv_home/inv_layout.html' %}
+{% load static %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-12 col-lg-12">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Crime Details</h2>
+                                    
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                           
+                                           <table class="table table-responsive">
+                                            <tr>
+                                            <th> Category</th>
+                                           
+                                            <th> Title</th>
+                                           
+                                            <th> Description</th>
+                                           
+                                            <th>Reported Date</th>
+                                           
+                                            <th>Status</th>
+                                             <th> Location</th>
+                                             <th>Reported By</th>
+                                             <th>Actions</th>
+                                            
+                                            </tr>
+                                            {% for r in rlist %}
+                                            <tr>
+                                                <td>{{r.category_name}}</td>
+                                                <td>{{r.crime_report_title}}</td>
+                                                <td>{{r.crime_description}}</td>
+                                                <td>{{r.crime_report_date|date:'d-m-Y'}}</td>
+                                                <td>{{r.crime_report_status}}</td>
+                                                <td><a href="{% url 'crime_location_view' r.crime_report_id %}" class="text-primary">{{r.crime_report_location}}</a></td>
+                                                <td><a href="#" class="text-success"
+   class="showCitizen"
+   data-bs-toggle="modal"
+   data-bs-target="#citizenModal"
+   data-name="{{ r.full_name }}"
+   data-email="{{ r.user_email }}"
+   data-phone="{{ r.user_phone }}"
+   data-address="{{ r.user_address }}"
+   data-location="{{ r.user_location }}"
+    data-gender="{{ r.user_gender }}">{{ r.full_name }}
+   
+</a></td>
+<td><a href="" class="btn btn-sm btn-danger">Evidence</a>
+<a href="{% url 'investigation_note' r.crime_report_id %}" class="btn btn-sm btn-warning">Investigation Notes</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+                     </div>
+                   <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const citizenModal = document.getElementById("citizenModal");
+
+    citizenModal.addEventListener("show.bs.modal", function (event) {
+        const link = event.relatedTarget;
+
+        document.getElementById("cName").textContent = link.getAttribute("data-name");
+        document.getElementById("cEmail").textContent = link.getAttribute("data-email");
+        document.getElementById("cPhone").textContent = link.getAttribute("data-phone");
+        document.getElementById("cAddress").textContent = link.getAttribute("data-address");
+        document.getElementById("cLocation").textContent = link.getAttribute("data-location");
+        document.getElementById("cGender").textContent = link.getAttribute("data-gender");
+    });
+
+});
+</script>
+
+
+                  <!-- Citizen Details Modal -->
+<div class="modal fade" id="citizenModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Citizen Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table">
+            <tr>
+            <th>Name</th>
+            <td id="cName"></td>
+            </tr>
+            <tr>
+             <th>Email</th>
+            <td id="cEmail"></td>
+        </tr>
+            <tr>
+              <th>Phone</th>
+              <td id="cPhone"></td>
+            </tr> 
+            <tr>
+               <th>Address</th>
+               <td id="cAddress"></td>
+            </tr>
+             <tr>
+                <th>Location</th>
+                <td id="cLocation"></td>
+            </tr>
+            <tr>
+                 <th>Gender</th>
+                 <td id="cGender"></td>
+                </tr>
+        </table>
+  
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+                  
+                   
+                  </div>
+                  {% endblock %}

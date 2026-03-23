@@ -1,0 +1,94 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-8 col-lg-8">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>View Evidence</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+              <table class="table">
+    <tr>
+        <th>Evidence Name</th>
+        <th>Evidence Type</th>
+        <th>Evidence</th>
+        <th>uploaded Date></th>
+        <th>Added by</th>
+    </tr>
+
+    {% for e in elist %}
+    <tr>
+        <td>{{ e.evidence_file_name }}</td>
+        <td>{{ e.evidence_file_type }}</td>
+        <td>{{e.evidence_uploaded_date|date:'d-m-Y'}}</td>
+
+        <td>
+     {% if e.evidence_file_type == "Image" %}
+
+    <a href="{% get_media_prefix %}/{{ e.evidence_file }}" target="_blank" class="btn btn-default"><img src="{% get_media_prefix %}/{{ e.evidence_file}}" alt="{{ e.evidence_file_name }}" target="_blank"width="70" height="70"></a>
+{% elif e.evidence_file_type == "Pdf" %}
+    <a href="{% get_media_prefix %}/{{ e.evidence_file }}" target="_blank" class="btn btn-default">
+    <img src="{% static 'pdf_image.png' %}" width="70" height="70" alt="{{ e.evidence_file_name }}">
+</a>
+
+{% elif e.evidence_file_type == "Docx" %}
+   <a href="{% get_media_prefix %}/{{ e.evidence_file }}" target="_blank" class="btn btn-default">
+    <img src="{% static 'docx.png' %}" width="70" height="70" alt="{{ e.evidence_file_name }}">
+</a>
+{% elif e.evidence_file_type == "Video" %}
+ <a href="{% get_media_prefix %}{{ e.evidence_file }}" target="_blank" class="btn btn-default">
+    <video width="70" height="70">
+        <source src="{% get_media_prefix %}{{ e.evidence_file }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</a>
+{% else %}
+    No preview available
+{% endif %}
+
+
+        </td>
+
+        <td>
+            {{e.uploaded_by}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                      
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

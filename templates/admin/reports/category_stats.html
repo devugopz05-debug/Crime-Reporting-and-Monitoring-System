@@ -1,0 +1,105 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>Category-wise Statistics</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="row column2 graph margin_bottom_30">
+        <div class="col-md-12">
+            <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Crimes by Category</h2>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <canvas id="categoryChart" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Stats Table -->
+    <div class="row column3">
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Detailed Breakdown</h2>
+                    </div>
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Category Name</th>
+                                    <th>Total Reports</th>
+                                    <th>Resolved/Closed</th>
+                                    <th>Pending/In Progress</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in stats %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.total }}</td>
+                                    <td class="text-success">{{ item.resolved }}</td>
+                                    <td class="text-warning">{{ item.pending }}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('categoryChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels| safe }},
+        datasets: [{
+            label: 'Total Reports',
+            data: {{ total_data| safe }},
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+                }]
+            },
+        options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+        });
+    });
+</script>
+
+{% endblock %}

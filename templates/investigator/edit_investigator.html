@@ -1,0 +1,107 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                     
+                          <div class="col-md-7 col-lg-7">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Edit Investigator Details</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'update_investigator' %}" method="post">
+{% csrf_token %}
+        <!-- Full Name -->
+        <div class="mb-3">
+            <label for="full_name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="full_name" name="full_name"
+                   pattern="^[A-Za-z ]{2,50}$" value="{{inv.inv_full_name}}"
+                   title="Full name should contain only letters and spaces (2-50 characters)"
+                   required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="user_email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="user_email" name="user_email"value="{{inv.inv_email}}"
+                   title="Enter a valid email address"
+                   required>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-3">
+            <label for="user_phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="user_phone" name="user_phone"value="{{inv.inv_phone}}"
+                   pattern="^\d{10}$"
+                   title="Enter a 10-digit phone number"
+                   required>
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            <label for="user_address" class="form-label">Address</label>
+            <textarea class="form-control" id="user_address" name="user_address" rows="3"
+                      pattern="^[A-Za-z0-9\s,.-]{5,100}$"
+                      title="Address can contain letters, numbers, spaces, commas, dots, and hyphens (5-100 characters)"
+                      required>{{inv.inv_address}}</textarea>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="user_location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="user_location" name="user_location"
+                   pattern="^[A-Za-z ]{2,50}$" value="{{inv.inv_location}}"
+                   title="Location should contain only letters and spaces (2-50 characters)"
+                   required>
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+           <input type="radio" name="user_gender" id="gender_male" value="Male" {% if inv.inv_gender == 'Male' %} checked {% endif %} required>Male
+            <input type="radio" name="user_gender" id="gender_female" value="Female" {% if inv.inv_gender == 'Female' %} checked {% endif %} required>Female
+        </div>
+
+     <input type="hidden" name="iid" value="{{inv.inv_id}}">
+        
+
+       
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-end">
+            <input type="submit" class="btn btn-success" value="Save">
+             <input type="reset" class="btn btn-danger" value="Cancel">
+        </div>
+
+    </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

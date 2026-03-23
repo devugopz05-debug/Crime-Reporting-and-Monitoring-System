@@ -1,0 +1,44 @@
+[
+  {
+    "act_name": "CrPC",
+    "chapter": "Arrest",
+    "section": "41",
+    "title": "When Police May Arrest Without Warrant",
+    "description": "Police powers of arrest."
+  },
+  {
+    "act_name": "CrPC",
+    "chapter": "Rights of Arrested Person",
+    "section": "50",
+    "title": "Person Arrested to be Informed",
+    "description": "Grounds of arrest must be informed."
+  },
+  {
+    "act_name": "CrPC",
+    "chapter": "Investigation",
+    "section": "154",
+    "title": "FIR Registration",
+    "description": "Information in cognizable cases."
+  },
+  {
+    "act_name": "CrPC",
+    "chapter": "Investigation",
+    "section": "161",
+    "title": "Examination of Witnesses",
+    "description": "Police may examine witnesses."
+  },
+  {
+    "act_name": "CrPC",
+    "chapter": "Bail",
+    "section": "436",
+    "title": "Bail in Bailable Offences",
+    "description": "Right to bail in bailable cases."
+  },
+  {
+    "act_name": "CrPC",
+    "chapter": "Bail",
+    "section": "437",
+    "title": "Bail in Non-Bailable Offences",
+    "description": "Court discretion in bail."
+  }
+]

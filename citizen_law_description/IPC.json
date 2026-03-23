@@ -1,0 +1,128 @@
+[
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Human Body",
+    "section": "302",
+    "title": "Punishment for Murder",
+    "description": "Death or life imprisonment and fine."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Human Body",
+    "section": "304",
+    "title": "Culpable Homicide",
+    "description": "Punishment for culpable homicide not amounting to murder."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Human Body",
+    "section": "307",
+    "title": "Attempt to Murder",
+    "description": "Imprisonment up to 10 years or life."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Human Body",
+    "section": "323",
+    "title": "Voluntarily Causing Hurt",
+    "description": "Imprisonment up to 1 year or fine."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Human Body",
+    "section": "326",
+    "title": "Grievous Hurt",
+    "description": "Imprisonment up to 10 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Women",
+    "section": "354",
+    "title": "Outraging Modesty of Woman",
+    "description": "Imprisonment up to 5 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Women",
+    "section": "376",
+    "title": "Rape",
+    "description": "Imprisonment not less than 10 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Property",
+    "section": "378",
+    "title": "Theft Definition",
+    "description": "Dishonestly taking property."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Property",
+    "section": "379",
+    "title": "Punishment for Theft",
+    "description": "Imprisonment up to 3 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Property",
+    "section": "390",
+    "title": "Robbery",
+    "description": "Robbery definition."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Property",
+    "section": "392",
+    "title": "Punishment for Robbery",
+    "description": "Rigorous imprisonment up to 10 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Offences Against Property",
+    "section": "395",
+    "title": "Dacoity",
+    "description": "Imprisonment for life or up to 10 years."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Cheating",
+    "section": "415",
+    "title": "Cheating Definition",
+    "description": "Dishonest inducement."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Cheating",
+    "section": "420",
+    "title": "Cheating and Dishonestly Inducing Delivery of Property",
+    "description": "Up to 7 years imprisonment."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Forgery",
+    "section": "463",
+    "title": "Forgery Definition",
+    "description": "Making false documents."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Forgery",
+    "section": "468",
+    "title": "Forgery for Purpose of Cheating",
+    "description": "Up to 7 years imprisonment."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Defamation",
+    "section": "499",
+    "title": "Defamation",
+    "description": "Harming reputation."
+  },
+  {
+    "act_name": "IPC",
+    "chapter": "Criminal Intimidation",
+    "section": "506",
+    "title": "Criminal Intimidation",
+    "description": "Imprisonment up to 2 years."
+  }
+]

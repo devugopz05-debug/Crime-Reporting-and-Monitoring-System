@@ -1,0 +1,184 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+   <div class="row column_title">
+      <div class="col-md-12">
+         <div class="page_title">
+            <h2>Dashboard</h2>
+         </div>
+      </div>
+   </div>
+
+
+   <!-- graph -->
+   <div class="row column2 graph margin_bottom_30">
+      <div class="col-md-8 col-lg-8">
+         <div class="white_shd full">
+            <div class="full graph_head">
+               <div class="heading1 margin_0">
+                  <h2>View Evidence <a href="{% url 'crime_citizen' %}" class="btn btn-sm btn-warning"
+                        style="margin-left: 270px;"><i class="fa fa-arrow-left"></i> Back</a></h2>
+               </div>
+            </div>
+            <div class="full graph_revenue">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="content">
+                        <div class="area_chart">
+                           <table class="table">
+                              <tr>
+                                 <th>Evidence Name</th>
+                                 <th>Evidence Type</th>
+                                 <th>Evidence</th>
+                                 <th>uploaded Date</th>
+                                 <th>Actions</th>
+                              </tr>
+                              {% for e in evidence %}
+   <tr>
+      <td>{{ e.evidence_file_name }}</td>
+      <td>{{ e.evidence_file_type }}</td>
+<td>
+{% if e.evidence_file %}
+
+    {% with e.evidence_file.name|lower as filename %}
+    {% with e.evidence_file_type|lower as ftype %}
+
+        {% if ftype == "image" %}
+
+            {% if ".jpg" in filename or ".jpeg" in filename or ".png" in filename or ".gif" in filename or ".webp" in filename %}
+                <img src="{% get_media_prefix %}/{{ e.evidence_file }}" width="100" height="100">
+            {% else %}
+                Not a supported image file
+            {% endif %}
+
+        {% elif ftype == "pdf" %}
+
+    {% if ".pdf" in filename %}
+        <a href="{% get_media_prefix %}/{{ e.evidence_file }}" target="_blank">
+            <img src="{% static 'pdf_image.png' %}" width="100" height="100">
+        </a>
+    {% else %}
+        Not a supported pdf file
+    {% endif %}
+
+        {% elif ftype == "document" or ftype == "doc" or ftype == "docx" %}
+
+    {% if ".doc" in filename or ".docx" in filename %}
+        <a href="{% get_media_prefix %}/{{ e.evidence_file }}" target="_blank">
+            <img src="{% static 'docx.png' %}" width="100" height="100">
+        </a>
+    {% else %}
+        Not a supported document file
+    {% endif %}
+        {% elif ftype == "video" %}
+
+            {% if ".mp4" in filename or ".webm" in filename or ".ogg" in filename %}
+                <video width="200" height="150" controls>
+                    <source src="{% get_media_prefix %}/{{ e.evidence_file }}">
+                </video>
+            {% else %}
+                Not a supported video file
+            {% endif %}
+
+        {% else %}
+            Unknown file type
+        {% endif %}
+
+    {% endwith %}
+    {% endwith %}
+
+{% endif %}
+</td>      <td>{{ e.evidence_uploaded_date|date:"d-m-Y" }}</td>
+
+      <td>
+          <a href="{% url 'edit_evidence_citizen' e.crime_evidence_id %}" 
+       class="btn btn-sm btn-warning">
+       Edit
+       <br>
+    </a>
+         <a href="{% url 'delete_evidence' e.crime_evidence_id %}" 
+            class="btn btn-sm btn-danger">
+            Delete
+         </a>
+      </td>
+   </tr>
+   {% empty %}
+   <tr>
+      <td colspan="5" class="text-center">No Evidence Uploaded</td>
+   </tr>
+   {% endfor %}
+</table>                             
+                           </table>
+
+
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% if crime.crime_report_status != 'Closed' %}
+      <div class="col-md-4 col-lg-4">
+         <div class="white_shd full">
+            <div class="full graph_head">
+               <div class="heading1 margin_0">
+                  <h2>Add Evidence</h2>
+               </div>
+            </div>
+            <div class="full graph_revenue">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="content">
+                        <div class="area_chart">
+                           <form action="{% url 'save_evidence' %}" method="post" enctype="multipart/form-data">
+
+                              {% csrf_token %}
+                              
+                              <div class="form-group">
+                                 <label>Name</label>
+                                 <input type="text" class="form-control" name="fname" pattern="^[A-Za-z ]+$"
+                                    title="Only letters and spaces are allowed" required>
+                              </div>
+                              <div class="form-group">
+                                 <label>Evidence Type</label>
+                                 <select name="ftype" class="form-control">
+                                    <option>Select</option>
+                                    <option value="Image">Image</option>
+                                    <option value="Pdf">Pdf</option>
+                                    <option value="Docx">Docx</option>
+                                    <option value="Video">Video</option>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Evidence</label>
+                                 <input type="file" class="form-control" name="ev_file" required>
+                              </div>
+                              <div class="form-group">
+                                 <label>Uploaded Date</label>
+                                 <input type="date" class="form-control" name="ev_date" max="{% now 'Y-m-d' %}" required>
+                              </div>
+                              <input type="hidden" name="cid" value="{{ cid }}">
+                              <div class="form-group">
+                                 <input type="submit" class="btn btn-success" value="Save">
+                                 <input type="reset" class="btn btn-danger" value="Cancel">
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endif %}
+   </div>
+
+
+
+</div>
+{% endblock %}

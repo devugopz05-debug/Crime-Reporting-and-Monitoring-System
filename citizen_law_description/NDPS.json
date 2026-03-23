@@ -1,0 +1,30 @@
+[
+  {
+    "act_name": "NDPS",
+    "chapter": "Offences",
+    "section": "8",
+    "title": "Prohibition of Certain Operations",
+    "description": "Production, sale, purchase prohibited."
+  },
+  {
+    "act_name": "NDPS",
+    "chapter": "Punishment",
+    "section": "20",
+    "title": "Punishment for Cannabis",
+    "description": "Rigorous imprisonment."
+  },
+  {
+    "act_name": "NDPS",
+    "chapter": "Punishment",
+    "section": "21",
+    "title": "Punishment for Manufactured Drugs",
+    "description": "Punishment varies based on quantity."
+  },
+  {
+    "act_name": "NDPS",
+    "chapter": "Punishment",
+    "section": "22",
+    "title": "Psychotropic Substances",
+    "description": "Punishment provisions."
+  }
+]

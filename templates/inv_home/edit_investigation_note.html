@@ -1,0 +1,70 @@
+{% extends 'inv_home/inv_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                      
+                          <div class="col-md-6 col-lg-6">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Edit Investigation Notes</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'update_investigation_note' %}" method="post" enctype="multipart/form-data">
+
+                                          {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Investigation Note</label>
+                                                <textarea class="form-control" name="inv_note"pattern="^[A-Za-z ]+$"
+       title="Only letters and spaces are allowed" 
+       required> {{ note.investigation_note }}</textarea>
+     </div><div class="form-group">
+       <label>Investigation Status</label>
+       <select name="status" class="form-control">
+        <option>Select</option>
+        <option value="Under Review" {% if note.investigation_status == "Under Review" %}selected{% endif %}>Under Review</option>
+         <option value="In Investigation" {% if note.investigation_status == "In Investigation" %}selected{% endif %}>In Investigation</option>
+          <option value="Resolved"{% if note.investigation_status == "Resolved" %}selected{% endif %}>Resolved</option>
+           <option value="Closed"{% if note.investigation_status == "Closed" %}selected{% endif %}>Closed</option>
+       </select></div>
+       
+                                            <div class="form-group">
+                   <label>Uploaded Date</label> 
+       <input type="date"class="form-control" name="note_date" max="{% now 'Y-m-d' %}" value="{{ note.note_created_date|date:'d-m-Y' }}">                            
+                                            </div>
+                                            <input type="hidden" name="nid" value="{{ note.investigation_note_id }}">
+                                             <input type="hidden" name="cid" value="{{ note.fk_report_id_notes }}">
+                                             <div class="form-group">
+                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="reset" class="btn btn-danger" value="Cancel">
+                                           </div> </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

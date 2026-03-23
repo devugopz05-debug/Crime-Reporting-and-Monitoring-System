@@ -1,0 +1,165 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>Dashboard - Overview & Analytics</h2>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overview Cards -->
+    <div class="row column1">
+        <div class="col-md-6 col-lg-3">
+            <div class="full counter_section margin_bottom_30">
+                <div class="couter_icon">
+                    <div><i class="fa fa-file-text-o blue1_color"></i></div>
+                </div>
+                <div class="counter_no">
+                    <div>
+                        <p class="total_no">{{ new_cases }}</p>
+                        <p class="head_couter">New Cases</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="full counter_section margin_bottom_30">
+                <div class="couter_icon">
+                    <div><i class="fa fa-clock-o yellow_color"></i></div>
+                </div>
+                <div class="counter_no">
+                    <div>
+                        <p class="total_no">{{ pending_cases }}</p>
+                        <p class="head_couter">Pending</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="full counter_section margin_bottom_30">
+                <div class="couter_icon">
+                    <div><i class="fa fa-spinner green_color"></i></div>
+                </div>
+                <div class="counter_no">
+                    <div>
+                        <p class="total_no">{{ inprogress_cases }}</p>
+                        <p class="head_couter">In Progress</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="full counter_section margin_bottom_30">
+                <div class="couter_icon">
+                    <div><i class="fa fa-check-circle red_color"></i></div>
+                </div>
+                <div class="counter_no">
+                    <div>
+                        <p class="total_no">{{ closed_cases }}</p>
+                        <p class="head_couter">Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row column2 graph margin_bottom_30">
+        <div class="col-md-6 col-lg-6">
+            <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Cases by Status</h2>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+             <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Cases by Category</h2>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Status Chart
+        var ctxStatus = document.getElementById('statusChart').getContext('2d');
+        var statusChart = new Chart(ctxStatus, {
+            type: 'doughnut',
+            data: {
+                labels: {{ status_labels|safe }},
+                datasets: [{
+                    data: {{ status_counts|safe }},
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)', // New - Blue
+                        'rgba(255, 206, 86, 0.7)', // Pending - Yellow
+                        'rgba(75, 192, 192, 0.7)', // In Progress - Teal
+                        'rgba(153, 102, 255, 0.7)', // Resolved - Purple
+                        'rgba(255, 99, 132, 0.7)'  // Closed - Red
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: { position: 'bottom' }
+            }
+        });
+
+        // Category Chart
+        var ctxCat = document.getElementById('categoryChart').getContext('2d');
+        var categoryChart = new Chart(ctxCat, {
+            type: 'bar',
+            data: {
+                labels: {{ cat_names|safe }},
+                datasets: [{
+                    label: 'Number of Cases',
+                    data: {{ cat_counts|safe }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                },
+                legend: { display: false }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

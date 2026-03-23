@@ -1,0 +1,103 @@
+{% extends 'home/home_layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+</div>
+<div class="container-xxl py-5 px-0 wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s">
+    <div class="row g-0">
+        <div class="col-md-6">
+            <div class="video">
+                <img src="{% static 'home/' %}img/depositn.jpg" alt="">
+            </div>
+        </div>
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                <h1 class="section-title ff-secondary text-start text-primary fw-normal">Citizen Registration</h1>
+                {% if messages %}
+                {% for m in messages %}
+                <div class="alert {{m.tags}}" style="border:2px solid Violet;">
+                    <h5 class="" style="color:#FEA116;">{{m}}</h5>
+                </div>
+                {% endfor %}
+                     {% endif %}
+                <form action="{% url 'citizen_save' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="full_name" id="name"
+                                    placeholder="Your Name" pattern="^[A-Za-z ]{2,50}$"
+                                    title="Full name should contain only letters and spaces (2-50 characters)" required>
+                                <label for="name">Your Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Your Email"
+                                    name="user_email" title="Enter a valid email address" required>
+                                <label for="email">Your Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating date" id="date3" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" id="datetime"
+                                    placeholder="Phone Number" name="user_phone" pattern="^\d{10}$"
+                                    title="Enter a 10-digit phone number" required />
+                                <label for="datetime">Phone Number</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="email" placeholder="Your Email"
+                                    name="user_location" pattern="^[A-Za-z ]{2,50}$"
+                                    title="Full name should contain only letters and spaces (2-50 characters)" required>
+                                <label for="email">Your Location</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Special Request" id="message"
+                                    name="user_address" style="height: 115px" pattern="^[A-Za-z0-9\s,.-]{5,100}$"
+                                    title="Address can contain letters, numbers, spaces, commas, dots, and hyphens (5-100 characters)"
+                                    required></textarea>
+                                <label for="message">Address</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label d-block text-light">Gender</label>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input text-light" type="radio" name="gender" id="male"
+                                    value="Male" required>
+                                <label class="form-check-label text-light" for="male">Male</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input text-light" type="radio" name="gender" id="female"
+                                    value="Female" required>
+                                <label class="form-check-label text-light" for="female">Female</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="email" placeholder="Your Email"
+                                    name="password"
+                                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                                    title="Password must contain at least one letter, one number, and one special character (min 8 characters)"
+                                    required>
+                                <label for="email">Password</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

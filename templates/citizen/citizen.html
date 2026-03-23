@@ -1,0 +1,138 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+   <div class="row column_title">
+      <div class="col-md-12">
+         <div class="page_title">
+            <h2>Dashboard</h2>
+         </div>
+      </div>
+   </div>
+   <div class="row column1">
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div>
+                  <i class="fa fa-file-text-o yellow_color"></i>
+               </div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ total_crimes }}</p>
+                  <p class="head_couter">Total Reports</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div>
+                  <i class="fa fa-clock-o blue1_color"></i>
+               </div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ pending_crimes }}</p>
+                  <p class="head_couter">Pending</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div>
+                  <i class="fa fa-refresh green_color"></i>
+               </div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ processing_crimes }}</p>
+                  <p class="head_couter">Processing</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+         <div class="full counter_section margin_bottom_30">
+            <div class="couter_icon">
+               <div>
+                  <i class="fa fa-check-circle red_color"></i>
+               </div>
+            </div>
+            <div class="counter_no">
+               <div>
+                  <p class="total_no">{{ completed_crimes }}</p>
+                  <p class="head_couter">Completed</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- graph -->
+   <div class="row column2 graph margin_bottom_30">
+      <div class="col-md-l2 col-lg-12">
+         <div class="white_shd full">
+            <div class="full graph_head">
+               <div class="heading1 margin_0">
+                  <h2>Recent Reports</h2>
+               </div>
+            </div>
+            <div class="full graph_revenue">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="content">
+                        <div class="table_section padding_infor_info">
+                           <div class="table-responsive-sm">
+                              <table class="table">
+                                 <thead>
+                                    <tr>
+                                       <th>Title</th>
+                                       <th>Category</th>
+                                       <th>Date</th>
+                                       <th>Status</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    {% for report in recent_reports %}
+                                    <tr>
+                                       <td>{{ report.crime_report_title }}</td>
+                                       <td>{{ report.category_name }}</td>
+                                       <td>{{ report.crime_report_date|date:'d-m-Y' }}</td>
+                                       <td>
+                                          {% if report.crime_report_status == 'requested' %}
+                                          <span class="badge badge-warning">Pending</span>
+             {% elif report.crime_report_status == 'Under Review' or report.crime_report_status == 'In Investigation' %}
+                                          <span class="badge badge-info">{{ report.crime_report_status }}</span>
+                                          {% elif report.crime_report_status == 'Resolved' or report.crime_report_status == 'Closed' %}
+                                          <span class="badge badge-success">{{ report.crime_report_status }}</span>
+                                          {% else %}
+                                          <span class="badge badge-secondary">{{ report.crime_report_status }}</span>
+                                          {% endif %}
+                                       </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                       <td colspan="4" class="text-center">No recent reports found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+</div>
+{% endblock %}

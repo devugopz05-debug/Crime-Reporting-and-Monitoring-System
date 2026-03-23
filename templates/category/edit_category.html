@@ -1,0 +1,57 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        
+                          <div class="col-md-5 col-lg-5">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Edit Category</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'update_category' %}" method="post">
+
+                                          {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <input type="text"class="form-control" name="categ"pattern="^[A-Za-z ]+$"
+       title="Only letters and spaces are allowed"required value="{{categ.category_name}}">
+       <label>Description</label>
+       <textarea name="desc" class="form-control">{{categ.category_dec}}</textarea>
+       <input type="hidden" name="cat_id" value="{{categ.category_id}}">
+                                                
+                                            </div>
+                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="reset" class="btn btn-danger" value="Cancel">
+                                            </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-12 col-lg-12">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>View Investigators</h2>
+                                     <div><a href="{% url 'new_investigator' %}"class="btn btn-sm btn-info"style="margin-left: 748px;width: 150px; height: 40;" >Add Investigator</a></div>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                           
+                                           <table class="table">
+                                            <tr>
+                                                <th>Name</th>
+                                    
+                                                  <th>Email</th>
+                                                   <th>Phone Number</th>
+                                                    <th>Address</th>
+                                                     <th>Location</th>
+                                                      <th>Gender</th>
+                                                       <th>Actions</th>
+                                                        
+                                            </tr>
+                                            {% for i in ilist %}
+                                            <tr>
+                                                <td>{{i.inv_full_name}}</td>
+                                                <td>{{i.inv_email}}</td>
+                                                 <td>{{i.inv_phone}}</td>
+                                                <td>{{i.inv_address}}</td>
+                                                 <td>{{i.inv_location}}</td>
+                                                <td>{{i.inv_gender}}</td>
+                                                <td>
+                                                    <a href="{% url 'edit_investigator' i.inv_id %}"class="btn btn-sm btn-warning">Edit</a>
+                                                <a href="{% url 'delete_investigator' i.inv_id %}"class="btn btn-sm btn-danger">Delete</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                           </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

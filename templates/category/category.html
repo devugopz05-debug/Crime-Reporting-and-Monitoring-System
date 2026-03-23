@@ -1,0 +1,91 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-7 col-lg-7">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>View Category</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                           <table class="table">
+                                            <tr>
+                                                <th>Category</th>
+                                                 <th>Category Description</th>
+                                                  <th>Actions</th>
+                                            </tr>
+                                            {% for c in clist %}
+                                            <tr>
+                                                <td>{{c.category_name}}</td>
+                                                <td>{{c.category_dec}}</td>
+                                                <td>
+                                                    <a href="{% url 'edit_category' c.category_id %}"class="btn btn-sm btn-warning">Edit</a>
+                                                <a href="{% url 'delete_category' c.category_id %}"class="btn btn-sm btn-danger">Delete</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                           </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                          <div class="col-md-5 col-lg-5">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Add Category</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'category_save' %}" method="post">
+
+                                          {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <input type="text"class="form-control" name="categ"pattern="^[A-Za-z ]+$"
+       title="Only letters and spaces are allowed"
+       required>
+       <label>Description</label>
+       <textarea name="desc" class="form-control"></textarea>
+                                                
+                                            </div>
+                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="reset" class="btn btn-danger" value="Cancel">
+                                            </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

@@ -1,0 +1,37 @@
+[
+  {
+    "act_name": "Information Technology Act",
+    "chapter": "Cyber Offences",
+    "section": "43",
+    "title": "Penalty for Damage to Computer System",
+    "description": "Unauthorized access, data theft or damage to computer systems."
+  },
+  {
+    "act_name": "Information Technology Act",
+    "chapter": "Cyber Offences",
+    "section": "66",
+    "title": "Computer Related Offences",
+    "description": "Punishment for hacking and computer related offences."
+  },
+  {
+    "act_name": "Information Technology Act",
+    "chapter": "Cyber Offences",
+    "section": "66C",
+    "title": "Identity Theft",
+    "description": "Fraudulent use of electronic signature, password or identity."
+  },
+  {
+    "act_name": "Information Technology Act",
+    "chapter": "Cyber Offences",
+    "section": "66D",
+    "title": "Cheating by Personation",
+    "description": "Online cheating using computer resources."
+  },
+  {
+    "act_name": "Information Technology Act",
+    "chapter": "Cyber Offences",
+    "section": "67",
+    "title": "Publishing Obscene Content Online",
+    "description": "Publishing or transmitting obscene material electronically."
+  }
+]

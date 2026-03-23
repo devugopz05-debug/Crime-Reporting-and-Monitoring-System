@@ -1,0 +1,80 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>Crime Location</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- map -->
+    <div class="row column2 graph margin_bottom_30">
+        <div class="col-md-12 col-lg-12">
+            <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>{{ crime.crime_report_title }}</h2>
+                        <p class="text-muted">{{ crime.crime_report_location }}</p>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <div class="area_chart">
+                                    <style>
+                                        #map {
+                                            height: 500px;
+                                            width: 100%;
+                                            border-radius: 8px;
+                                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                        }
+                                    </style>
+
+                                    <div id="map"></div>
+
+                                    <script>
+                                        // Fetch coordinates from Django context
+                                        var lat = {{ crime.crime_report_latitude }};
+                                        var lng = {{ crime.crime_report_longitude }};
+
+                                        // Initialize map
+                                        var map = L.map('map').setView([lat, lng], 15); // zoom 15 = street level
+
+                                        // Load OpenStreetMap tiles
+                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            maxZoom: 19,
+                                            attribution: '© OpenStreetMap contributors'
+                                        }).addTo(map);
+
+                                        // Add marker at crime location
+                                        var marker = L.marker([lat, lng]).addTo(map);
+
+                                        // Add popup with details
+                                        marker.bindPopup("<b>{{ crime.crime_report_title }}</b><br>{{ crime.crime_report_location }}").openPopup();
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <a href="{% url 'crime_citizen' %}" class="btn btn-warning"><i class="fa fa-arrow-left"></i>
+                            Back to Crimes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+[
+  {
+    "act_name": "POSH Act",
+    "chapter": "Sexual Harassment",
+    "section": "3",
+    "title": "Prevention of Sexual Harassment",
+    "description": "Workplace harassment prohibition."
+  },
+  {
+    "act_name": "POSH Act",
+    "chapter": "Complaints Committee",
+    "section": "4",
+    "title": "Constitution of Internal Committee",
+    "description": "Internal complaint committee setup."
+  },
+  {
+    "act_name": "POSH Act",
+    "chapter": "Complaint Procedure",
+    "section": "9",
+    "title": "Filing Complaint",
+    "description": "Procedure for complaint filing."
+  },
+  {
+    "act_name": "POSH Act",
+    "chapter": "Inquiry",
+    "section": "11",
+    "title": "Inquiry into Complaint",
+    "description": "Internal inquiry procedure."
+  }
+]

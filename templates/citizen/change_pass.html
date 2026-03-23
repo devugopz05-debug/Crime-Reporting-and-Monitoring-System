@@ -1,0 +1,55 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-7 col-lg-7">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Change Password</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'update_password_citizen' %}" method="post">
+
+                                          {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>New Password</label>
+                                                <input type="password"class="form-control" name="npass"pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"
+       title="Password must contain at least one letter, one number, and one special character">
+                                                <label>Confirm Password</label>
+                                                <input type="password"class="form-control" name="cpass"pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"
+       title="Password must contain at least one letter, one number, and one special character">
+                                            </div>
+                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="reset" class="btn btn-danger" value="Cancel">
+                                            </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

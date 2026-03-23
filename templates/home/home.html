@@ -1,0 +1,66 @@
+     {% extends 'home/home_layout.html' %}
+     {% load static %}
+     {% block content %}
+     <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container my-5 py-5">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <h1 class="display-3 text-white animated slideInLeft">Your Voice<br>Against Crime</h1>
+                            <p class="text-white animated slideInLeft mb-4 pb-2">Speak up against crime with real-time reporting and monitoring.</p>
+                           
+                        </div>
+                        <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                            <img class="img-fluid" src="{% static 'home/' %}img/crimes-series.webp" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+
+        <!-- Service Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-shield-alt text-primary mb-4"></i>
+                                <h5> Secure Crime Reporting</h5>
+                                <p>Citizens can report crimes securely with complete confidentiality and accurate details to ensure quick action by authorities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-chart-line text-primary mb-4"></i>
+                                <h5>Real-Time Case Tracking</h5>
+                                <p>Users can track the status of reported cases in real time and stay updated with investigation progress and actions taken.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                               <i class="fa fa-3x fa-user-secret text-primary mb-4"></i>
+                                <h5>Investigator Management</h5>
+                                <p>Administrators can assign cases to investigators, monitor their work, and manage investigation reports efficiently.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="service-item rounded pt-3">
+                            <div class="p-4">
+                                <i class="fa fa-3x fa-folder-open text-primary mb-4"></i>
+                                <h5>Evidence & Report Management</h5>
+                                <p>Secure management of evidence, documents, and investigation notes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service End -->
+         {% endblock %}

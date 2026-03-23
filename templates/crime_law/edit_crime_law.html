@@ -1,0 +1,66 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        
+                          <div class="col-md-5 col-lg-5">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Edit Category</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                            <form action="{% url 'update_crime_law' %}" method="post">
+
+                                          {% csrf_token %}
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select class="form-control" name="categ" required>
+            {% for c in clist %}
+            <option value="{{ c.category_id }}"
+                {% if c.category_id == law.fk_crime_cat.category_id %}
+                    selected
+                {% endif %}
+            >
+                {{ c.category_name }}
+            </option>
+            {% endfor %}
+        </select>
+       <label>Law</label>
+       <textarea name="law" class="form-control">{{l.crime_law}}</textarea>
+       <input type="hidden" name="law_id" value="{{ law.crime_law_id }}">
+                                                
+                                            </div>
+                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="reset" class="btn btn-danger" value="Cancel">
+                                            </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   
+                  
+                   
+                  </div>
+                  {% endblock %}

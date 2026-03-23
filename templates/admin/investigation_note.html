@@ -1,0 +1,70 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>Investigation Notes</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row column2 graph margin_bottom_30">
+        <div class="col-md-12 col-lg-12">
+            <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Notes for Crime Report 
+                            <a href="{% url 'reported_crimes' %}" class="btn btn-sm btn-warning"
+                                style="margin-left: 20px;">
+                                <i class="fa fa-arrow-left"></i> Back
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <div class="area_chart">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                        <th>Investigator </th>
+                                                  
+
+                                                <th>Investigation Notes</th>
+                                                <th>Investigation Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in notes %}
+                                            <tr>
+                                                <td>{{ i.inv_full_name }}</td>
+                                              
+
+                                                <td>{{ i.investigation_note }}</td>
+                                                <td>{{ i.note_created_date|date:'d-m-Y' }}</td>
+                                                <td>{{ i.investigation_status }}</td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="3" class="text-center">No investigation notes found for
+                                                    this crime.</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

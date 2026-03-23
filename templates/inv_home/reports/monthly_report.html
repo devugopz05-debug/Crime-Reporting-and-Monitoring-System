@@ -1,0 +1,102 @@
+{% extends 'inv_home/inv_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>My Monthly Reports</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="row column2 graph margin_bottom_30">
+        <div class="col-md-12">
+            <div class="white_shd full">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Cases Assigned Over Time</h2>
+                    </div>
+                </div>
+                <div class="full graph_revenue">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="content">
+                                <canvas id="monthlyChart" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="row column3">
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Monthly Data</h2>
+                    </div>
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Total Cases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in table_data %}
+                                <tr>
+                                    <td>{{ item.month }}</td>
+                                    <td>{{ item.count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('monthlyChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ months| safe }},
+        datasets: [{
+            label: 'Cases Assigned',
+            data: {{ counts| safe }},
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+        fill: true
+                }]
+            },
+        options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }]
+        }
+    }
+        });
+    });
+</script>
+
+{% endblock %}

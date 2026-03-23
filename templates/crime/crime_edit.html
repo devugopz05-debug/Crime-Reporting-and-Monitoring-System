@@ -1,0 +1,56 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <h2>Edit Crime Report</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form action="{% url 'update_reported_crimes' %}" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Category</label>
+            <select class="form-control" name="categ" required>
+                {% for c in categories %}
+                    <option value="{{ c.category_id }}"
+                        {% if crime.fk_category_id == c.category_id %}selected{% endif %}>
+                        {{ c.category_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Title</label>
+            <input name="title" type="text" class="form-control" value="{{ crime.crime_report_title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control" required  style="height:200px;">{{ crime.crime_description }}</textarea>
+        </div>
+
+    
+<input type="hidden" name="crime_id" value="{{crime.crime_report_id}}">
+
+        <div class="form-group">
+            <label>Date</label>
+            <input name="cdate" type="date" class="form-control" id="cdate"
+                   value="{{ crime.crime_report_date|date:'Y-m-d' }}" max="{{ today }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Crime</button>
+        <a href="{% url 'crime_citizen' %}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+
+<script>
+    let today = new Date().toISOString().split("T")[0];
+    document.getElementById("cdate").max = today;
+</script>
+
+{% endblock %}

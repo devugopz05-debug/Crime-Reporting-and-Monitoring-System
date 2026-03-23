@@ -1,0 +1,200 @@
+{% extends 'citizen/citizen_layout.html' %}
+{% load static %}
+{% block content %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Leaflet Geocoder -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<style>
+.leaflet-container {
+    height: 120px !important;
+}
+</style>
+<div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Dashboard</h2>
+                           </div>
+                        </div>
+                     </div>
+                   
+                   
+                     <!-- graph -->
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-12 col-lg-12">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Report Crimes</h2>
+                                    
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                      
+<form action="{% url 'save_crime' %}" method="post">
+    {% csrf_token %}
+
+  <div class="form-group">
+    <label>Category</label>
+    <select class="form-control" name="category" required>
+        <option>Select</option>
+       {% for c in clist %}
+       <option value="{{c.category_id }}">{{c.category_name}}</option>
+       {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Title</label>
+    <input name="title" type="text" class="form-control"
+           required pattern="^[A-Za-z ]{5,100}$"
+           title="Only letters & spaces (5-100 characters)">
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <textarea name="description" class="form-control"
+              required minlength="5"></textarea>
+  </div>
+
+  <!-- Search Box -->
+  <div class="form-group">
+    <label>Search Location on Map</label>
+    <input type="text" id="search-location" class="form-control"
+           placeholder="Type a place name">
+  </div>
+
+  <!-- MAP BOX -->
+  <div id="map" style="height: 120px; width: 80%; border-radius: 8px; margin-bottom:10px;"></div>
+
+  <div class="form-group">
+    <label>Location</label>
+    <input id="location" name="location" type="text"
+           class="form-control" required>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>Latitude</label>
+        <input name="latitude" type="text" class="form-control" required>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label>Longitude</label>
+        <input name="longitude" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+
+ <div class="form-group">
+    <label>Date</label>
+    <input name="cdate" type="date" class="form-control" id="cdate" required>
+</div>
+
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    
+    document.getElementById("cdate").max = today; // prevent future dates
+</script>
+
+
+  <div class="actions">
+    <button type="submit" class="btn btn-success">Submit Crime Report</button>
+    <button type="reset" class="btn btn-danger">Cancel</button>
+  </div>
+</form>
+
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+                     </div>
+                   
+                  
+                   
+                  </div>
+
+                  <script>
+// Default map center (India)
+var map = L.map('map').setView([10.3528744, 76.5120396], 5);
+
+// Load OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+}).addTo(map);
+
+// Default marker
+var marker = L.marker([10.3528744, 76.5120396], { draggable: true }).addTo(map);
+
+// Search control
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false
+}).on('markgeocode', function (e) {
+
+    var center = e.geocode.center;
+    map.setView(center, 14);
+    marker.setLatLng(center);
+
+    // Auto-fill fields
+    document.getElementById("location").value = e.geocode.name;
+    document.getElementsByName("latitude")[0].value = center.lat;
+    document.getElementsByName("longitude")[0].value = center.lng;
+
+}).addTo(map);
+
+// Manual text search input
+document.getElementById("search-location").addEventListener("change", function () {
+    var query = this.value;
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.length > 0) {
+                var loc = data[0];
+                var lat = parseFloat(loc.lat);
+                var lon = parseFloat(loc.lon);
+
+                map.setView([lat, lon], 14);
+                marker.setLatLng([lat, lon]);
+
+                document.getElementById("location").value = loc.display_name;
+                document.getElementsByName("latitude")[0].value = lat;
+                document.getElementsByName("longitude")[0].value = lon;
+            }
+        });
+});
+
+// When dragging the marker
+marker.on("dragend", function () {
+    var pos = marker.getLatLng();
+    
+    document.getElementsByName("latitude")[0].value = pos.lat;
+    document.getElementsByName("longitude")[0].value = pos.lng;
+
+    // Reverse geocoding (lat→address)
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.lat}&lon=${pos.lng}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.display_name) {
+                document.getElementById("location").value = data.display_name;
+            }
+        });
+});
+</script>
+
+                  {% endblock %}
