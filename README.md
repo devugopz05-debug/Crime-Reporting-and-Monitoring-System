@@ -57,7 +57,7 @@ python manage.py createsuperuser
 
 ## 📸 Screenshots
 <img width="1920" height="1020" alt="Screenshot 2026-03-15 000543" src="https://github.com/user-attachments/assets/163e0890-3657-4d02-b9f2-6b5c322d7203" />
-<img width="1901" height="917" alt="hpadm" src="https://github.com/user-attachments/assets/4a74026b-2a46-4433-b9f1-375630ef05e3" />
+
 <img width="1898" height="903" alt="Screenshot 2026-03-15 000914" src="https://github.com/user-attachments/assets/9dee9f22-43ba-4624-9484-069b31d22511" />
 <img width="1919" height="912" alt="Screenshot 2026-03-15 001108" src="https://github.com/user-attachments/assets/4b6d5dff-8f13-47c1-9e6b-ccab46ab0fae" />
 <img width="1919" height="909" alt="Screenshot 2026-03-15 001416" src="https://github.com/user-attachments/assets/d8bda98c-025f-4fd1-ae54-a5ffefa827d1" />
