@@ -72,14 +72,15 @@ python manage.py createsuperuser
 <img width="1892" height="913" alt="Screenshot 2026-03-15 002938" src="https://github.com/user-attachments/assets/b17edd69-f2ca-4b27-9a81-8b5e36b5ca3b" />
 <img width="1920" height="1080" alt="Screenshot 2026-03-12 233936" src="https://github.com/user-attachments/assets/bc7a14a1-14ed-4cd0-a2bb-10a5d7de193b" />
 
-## 🗄️ Database Configuration
+## 🗄️ Database Setup
 
-Update database settings in settings.py with your MySQL credentials before running the project.
-Database file: final_crime_report.sql
+1. Create a new MySQL database (e.g., crime_db)
+2. Open phpMyAdmin or MySQL Workbench
+3. Import the file: final_crime_report.sql
+4. Update database credentials in settings.py
+5. Run the project
 
-To use:
-1. Create a database
-2. Import this file
+The database was exported using phpMyAdmin.
 
 ## 👨‍💻 Developed By
 Devika Mohan  
