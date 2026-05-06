@@ -75,6 +75,11 @@ python manage.py createsuperuser
 ## 🗄️ Database Configuration
 
 Update database settings in settings.py with your MySQL credentials before running the project.
+Database file: final_crime_report.sql
+
+To use:
+1. Create a database
+2. Import this file
 
 ## 👨‍💻 Developed By
 Devika Mohan  
